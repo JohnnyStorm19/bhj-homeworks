@@ -12,14 +12,10 @@ function getHole(index) {
             lostCount++;
         }
         if(deadCount === 10) {
-            lostCount = 0;
-            deadCount = 0;
-            alert('Победа!');
+            getFinalResult('Победа')
         }
         if(lostCount === 5) {
-            lostCount = 0;
-            deadCount = 0;
-            alert('Поражение!');
+            getFinalResult('Поражение')
         }
         lost.textContent = lostCount;
         dead.textContent = deadCount;
@@ -27,6 +23,12 @@ function getHole(index) {
 }
 for(let index = 1; index <= 9; index++) {
     getHole(index);
+}
+
+function getFinalResult(message) {
+    lostCount = 0;
+    deadCount = 0;
+    alert(`${message}!`);
 }
 
 
