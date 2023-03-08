@@ -1,3 +1,8 @@
+  .content {
+  display: flex;
+  flex-direction: column;
+}
+
 .symbol {
   font-size: 50px;
 }
@@ -11,3 +16,25 @@
   color: #fff;
 }
 
+.timer-wrapper {
+margin-top: 20px;
+}
+
+.timer {
+  text-align: center;
+}
+
+.timer p {
+  border: 1px solid rgba(255, 0, 0, 0.518);
+  border-radius: 5%;
+  background-color: rgba(255, 0, 0, 0.518);
+  margin: 0;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.timer span {
+  display: block;
+  margin-top: 20px;
+  font-size: 40px;
+}
