@@ -2,20 +2,21 @@ const rotator = Array.from(document.querySelectorAll('.rotator__case'));
 const clue = document.querySelector('.clue');
 
 let index = 0;
-// let timer = 0;
 
 document.addEventListener('click', toStop);
-const intervalId = setInterval(toRevealRotations, 1000); // вместо интервала писал timer
-const intervalId2 = setInterval(toGrowTheClue, 1500);
+const timeoutId = setTimeout(toRevealRotations, 0);
+let timeoutId2 = null;
+const intervalId = setInterval(toGrowTheClue, 1500);
 
 function toRevealRotations() {
+    let timer = 0;
     rotator.forEach(elem => elem.classList.remove('rotator__case_active'));
     if(index === rotator.length) index = 0;
     rotator[index].classList.add('rotator__case_active');
     rotator[index].style.color = rotator[index].dataset.color;
-    // timer = +rotator[index].dataset.speed
-    //Но функция переменную timer не обновляла.
+    timer = +rotator[index].dataset.speed
     index++;
+    timeoutId2 = setTimeout(toRevealRotations, timer);
 }
 
 function toGrowTheClue() {
@@ -23,6 +24,7 @@ function toGrowTheClue() {
 }
 
 function toStop() {
+    clearTimeout(timeoutId);
+    clearTimeout(timeoutId2);
     clearInterval(intervalId);
-    clearInterval(intervalId2);
 }
