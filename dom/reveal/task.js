@@ -1,18 +1,15 @@
-const revealEl = document.querySelector('.reveal');
+const revealEl = Array.from(document.querySelectorAll('.reveal'));
 
-document.addEventListener('scroll', isVisible); //так работает
+document.addEventListener('scroll', isVisible);
 
 function isVisible() {
-    const { top, bottom } = revealEl.getBoundingClientRect();
-    bottom < 0 || top > window.innerHeight ? revealEl.classList.remove('reveal_active') : revealEl.classList.add('reveal_active');
-    console.log(top, bottom)
+    revealEl.forEach(elem => {
+        const{ innerHeight } = window;
+        const { top } = elem.getBoundingClientRect();
+        if (top < innerHeight && top > 0) {
+            elem.classList.add("reveal_active");
+          } else {
+            elem.classList.remove("reveal_active");
+          }
+    })
 }
-
-/* А так не работает
-document.addEventListener('scroll', isVisible(revealEl));
-
-function isVisible(elem) {
-    const { top, bottom } = elem.getBoundingClientRect();
-    bottom < 0 || top > window.innerHeight ? elem.classList.remove('reveal_active') : elem.classList.add('reveal_active');
-} */
-
