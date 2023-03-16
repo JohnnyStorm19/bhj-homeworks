@@ -1,37 +1,6 @@
 const interestsMain = document.querySelector('.interests_main');
 const interests = Array.from(interestsMain.querySelector('ul').children);
 
-//Вариант №1
-// checkboxes.forEach(checkbox => {
-//   checkbox.addEventListener('change', (event) => {
-//     interests.forEach(el => {
-//       if(event.target === el.querySelector('label .interest__check')) {
-//         const subCheck = Array.from(event.target.closest('label').nextElementSibling.querySelectorAll('input'));
-//         if(event.target.checked) {
-//           subCheck.forEach(el => el.checked = true);
-//         } else {
-//           subCheck.forEach(el => el.checked = false);
-//         }
-//         if(subCheck.some(element => element === false)) {
-//           el.querySelector('label .interest__check').checked = false;
-//         }
-//         console.log(event.target.closest('label').nextElementSibling);
-//         console.log(subCheck)
-//       }
-// let subCheck = null;
-// if(event.target.closest('.interest').nextElementSibling.querySelector('input')) {
-//   subCheck = event.target.closest('.interest').nextElementSibling.querySelector('input');
-// } 
-// if(event.target.checked && !subCheck.checked) {
-//   el.querySelector('label .interest__check').checked = false;
-// } else if(!event.target.checked && subCheck.checked) {
-//   el.querySelector('label .interest__check').checked = false;
-// }
-//     })
-//   })
-// })
-
-//Вариант №2
 interests.forEach(list => list.addEventListener('change', (event) => {
   if (event.target === list.querySelector('label input')) {
     activeSubChecks(event.target);
