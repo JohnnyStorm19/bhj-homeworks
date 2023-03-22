@@ -9,6 +9,7 @@ body {
 
 .cart__product {
   position: relative;
+  margin-right: 10px;
 }
 .cart__product-count {
   position: absolute;
@@ -21,10 +22,19 @@ body {
 
 .cart__product-image {
   border-radius: 6px;
-  margin-right: 10px;
   width: 100px;
   height: 100px;
   object-fit: contain;
+}
+.cart-remove {
+  padding: 0;
+  position: absolute;
+  top: -6px;
+  left: 0;
+  color: red;
+  font-size: 30px;
+  text-decoration: none;
+  cursor: pointer;
 }
 .product {
   display: flex;
