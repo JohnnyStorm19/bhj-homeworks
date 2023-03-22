@@ -54,6 +54,12 @@ chatInput.addEventListener('focus', () => {
     }, 30000)
 })
 
+chatInput.addEventListener('input', () => {
+    if(chatInput.value.charAt(0) === ' ') {
+        chatInput.value = '';
+      }
+})
+
 function toActiveRedWidget() {
     redChatWidget.classList.add('chat-widget_active');
 }
