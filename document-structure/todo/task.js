@@ -10,7 +10,7 @@ let removerIndex = null;
 tasksForm.addEventListener('click', (event) => {
     if (event.target === btn) {
         addTask();
-    } 
+    }
 });
 taskInput.addEventListener('input', () => {
     if(taskInput.value === ' ') {
@@ -34,12 +34,12 @@ if (tasksList) {
 function addTask() {
     if(taskInput.value) {
         let text = taskInput.value;
-        tasksArray.push(task); 
+        tasksArray.push(text); 
         taskInput.value = '';
         localStorage.setItem('tasks', JSON.stringify(tasksArray));
         displayTasks(tasksArray, tasksList);
         console.log(tasksArray);
-    } 
+    }
 }
 
 //отобразить таску
@@ -60,7 +60,7 @@ function removeTask(el) {
     tasksArray.splice(removerIndex, 1);
     localStorage.setItem('tasks', JSON.stringify(tasksArray))
     task.remove();
-    console.log(tasksArray)
+    console.log(tasksArray);
 }
 
 displayTasks(tasksArray, tasksList)
