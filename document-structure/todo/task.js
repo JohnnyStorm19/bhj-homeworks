@@ -8,8 +8,9 @@ let removerIndex = null;
 
 
 tasksForm.addEventListener('click', (event) => {
-    if (event.target === btn) addTask();
-    return;
+    if (event.target === btn) {
+        addTask();
+    } 
 });
 taskInput.addEventListener('input', () => {
     if(taskInput.value === ' ') {
@@ -33,17 +34,12 @@ if (tasksList) {
 function addTask() {
     if(taskInput.value) {
         let text = taskInput.value;
-        const task = {
-            task: text,
-        };
         tasksArray.push(task); 
         taskInput.value = '';
         localStorage.setItem('tasks', JSON.stringify(tasksArray));
         displayTasks(tasksArray, tasksList);
         console.log(tasksArray);
-    } else {
-        return
-    }
+    } 
 }
 
 //отобразить таску
@@ -51,7 +47,7 @@ function displayTasks(obj, list) {
     list.innerHTML = obj.map((item) => {
         return `<div class="task">
             <div class="task__title">
-                ${item.task}
+                ${item}
             </div>
             <a href="#" class="task__remove">&times;</a>
         </div>`
