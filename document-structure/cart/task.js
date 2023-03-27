@@ -1,7 +1,6 @@
 const products = document.querySelector('.products');
 const cart = document.querySelector('.cart');
 const cartProducts = cart.querySelector('.cart__products');
-let dataId = JSON.parse(localStorage.getItem('dataId')) || []; //массив с ID добавленных в корзину товаров
 let productInfo = JSON.parse(localStorage.getItem('productInfo')) || []; //массив с объектами (id карточки, ссылка на img, кол-во единиц)
 
 products.addEventListener('click', (event) => {
@@ -13,7 +12,9 @@ products.addEventListener('click', (event) => {
     }
     if (target.classList.contains('product__quantity-control_dec')) {
         let value = target.nextElementSibling;
-        if (value.textContent < 2) return;
+        if (value.textContent < 2) {
+            return;
+        } 
         value.textContent--;
     }
     //добавляем товар в корзину
@@ -21,18 +22,16 @@ products.addEventListener('click', (event) => {
         const product = target.closest('.product');
         const productCounter = product.querySelector('.product__quantity-value');
 
-        if (!dataId.includes(product.dataset.id)) {
+        if (!productInfo.map(el => el.id).includes(product.dataset.id)) {
             let cartProduct = {
                 id: product.dataset.id,
                 count: Number(product.querySelector('.product__quantity-value').textContent),
                 img: product.querySelector('.product__image').getAttribute('src')
             }
-            dataId.push(product.dataset.id); //пушим ID добавленного товара в массив с ID
             productInfo.push(cartProduct); // пушим объект с инфо о добавленном товаре в массив
             addProductToCart(productInfo, cartProducts); //добавляем разметку карточек товаров в корзину
             displayCart(); //показываем корзину
             localStorage.setItem('productInfo', JSON.stringify(productInfo));
-            localStorage.setItem('dataId', JSON.stringify(dataId));
             console.log('Сработала вставка через inner');
         } else {
             const productsInCart = [...cartProducts.querySelectorAll('.cart__product')];
@@ -57,11 +56,9 @@ cartProducts.addEventListener('click', (event) => { //обработчик дл�
         const currentProduct = target.closest('.cart__product'); 
         const currentId = currentProduct.dataset.id;
         currentProduct.remove();
-        dataId.splice(dataId.indexOf(currentId), 1); //удаляю ID из массива с ID
         let indexOfProductInfo = productInfo.indexOf(productInfo.find(el => el.id === currentId)); //получаю индекс элемента, который нужно удалить в массиве с объектами
         productInfo.splice(indexOfProductInfo, 1);
         localStorage.setItem('productInfo', JSON.stringify(productInfo));
-        localStorage.setItem('dataId', JSON.stringify(dataId));
         displayCart();
     }
 })
@@ -85,12 +82,3 @@ function addProductToCart(objArr, cartDiv) {
 
 addProductToCart(productInfo, cartProducts);
 displayCart();
-
-
-
-
-
-
-
-
-
