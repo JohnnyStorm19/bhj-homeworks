@@ -9,6 +9,7 @@ let removerIndex = null;
 
 tasksForm.addEventListener('click', (event) => {
     if (event.target === btn) {
+        event.preventDefault();
         addTask();
     }
 });
@@ -23,6 +24,7 @@ if (tasksList) {
         let removers = tasksList.querySelectorAll('.task__remove');
         for (let i = 0; i < removers.length; i++) {
             if (event.target === removers[i]) {
+                event.preventDefault();
                 removerIndex = i;
                 removeTask(event.target);
             }
