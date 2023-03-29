@@ -21,8 +21,9 @@ products.addEventListener('click', (event) => {
     if (target.classList.contains('product__add')) {
         const product = target.closest('.product');
         const productCounter = product.querySelector('.product__quantity-value');
+        const productInCart = productInfo.find(el => el.id === product.dataset.id);
 
-        if (!productInfo.map(el => el.id).includes(product.dataset.id)) {
+        if (!productInCart) {
             let cartProduct = {
                 id: product.dataset.id,
                 count: Number(product.querySelector('.product__quantity-value').textContent),
@@ -35,16 +36,12 @@ products.addEventListener('click', (event) => {
             console.log('Сработала вставка через inner');
         } else {
             const productsInCart = [...cartProducts.querySelectorAll('.cart__product')];
-            productsInCart.forEach(el => {
-                if (el.dataset.id === product.dataset.id) {
-                    let cartValue = el.querySelector('.cart__product-count');
-                    cartValue.textContent = +cartValue.textContent + +productCounter.textContent;
-                    let objToChange = productInfo.find(item => item.id === el.dataset.id);
-                    productInfo[productInfo.indexOf(objToChange)].count += +productCounter.textContent;
-                    localStorage.setItem('productInfo', JSON.stringify(productInfo));
-                    console.log('Объект уже вставлен');
-                }
-            })
+            let currentProduct = productsInCart.find(el => el.dataset.id === productInCart.id);
+            let cartValue = currentProduct.querySelector('.cart__product-count');
+            cartValue.textContent = +cartValue.textContent + +productCounter.textContent;
+            productInfo[productInfo.indexOf(productInCart)].count += +productCounter.textContent;
+            localStorage.setItem('productInfo', JSON.stringify(productInfo));
+            console.log('Объект уже вставлен');
         }
     }
 })
