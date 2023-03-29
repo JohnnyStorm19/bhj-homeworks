@@ -4,6 +4,8 @@ const welcomeEl = document.querySelector('.welcome');
 const userIdEl = document.getElementById('user_id');
 const signinBlock = document.getElementById('signin');
 const logoutBtn = document.getElementById('logout_btn');
+const errorMessage = document.querySelector('.error');
+
 
 let id = localStorage.getItem('id') || '';
 
@@ -17,6 +19,14 @@ if (!id) {
             userIdEl.textContent = xhr.response.user_id;
             hideLoginMenu();
             localStorage.setItem('id', xhr.response.user_id);
+        } else {
+            if(xhr.response.message) {
+                errorMessage.textContent = xhr.response.message
+                errorMessage.classList.add('error_active');
+            } else {
+                errorMessage.textContent = 'Invalid login and/or password';
+                errorMessage.classList.add('error_active');
+            }
         }
     })
 } else {
@@ -26,13 +36,14 @@ if (!id) {
 
 card.addEventListener('click', (event) => {
     let target = event.target;
+    // if()
     if (target.classList.contains('btn_login')) {
         event.preventDefault();
         let formData = new FormData(form);
         xhr.open('POST', requestURL);
         xhr.send(formData);
     }
-    if(target.classList.contains('btn_logout')) {
+    if (target.classList.contains('btn_logout')) {
         event.preventDefault();
         localStorage.clear();
         form.reset();

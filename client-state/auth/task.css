@@ -60,3 +60,13 @@
 .logout_active {
   display: block;
 }
+
+.error {
+  display: none;
+}
+
+.error_active{
+  display: block;
+  text-align: center;
+  color: crimson;
+}
