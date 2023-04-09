@@ -7,7 +7,7 @@ const logoutBtn = document.getElementById('logout_btn');
 const errorMessage = document.querySelector('.error');
 
 
-let id = localStorage.getItem('id') || '';
+let id = localStorage.getItem('id');
 
 let xhr = new XMLHttpRequest();
 let requestURL = 'https://students.netoservices.ru/nestjs-backend/auth';
@@ -45,7 +45,7 @@ card.addEventListener('click', (event) => {
     }
     if (target.classList.contains('btn_logout')) {
         event.preventDefault();
-        localStorage.clear();
+        localStorage.removeItem('id');
         form.reset();
         hideWelcomeBlock();
         userIdEl.textContent = '';
