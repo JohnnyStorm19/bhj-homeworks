@@ -1,66 +1,59 @@
-const loader = document.getElementById('loader');
-const items = document.getElementById('items');
-let obj = JSON.parse(localStorage.getItem('items')) || null; 
+const valutes = document.getElementById('items');
+const loader = document.querySelector('.loader');
+
+let valutesInfo = JSON.parse(localStorage.getItem('valutesInfo')) || null;
 
 let xhr = new XMLHttpRequest();
-let requestURL = 'https://students.netoservices.ru/nestjs-backend/slow-get-courses'
-xhr.open('GET', requestURL);
+let requestUrl = 'https://students.netoservices.ru/nestjs-backend/slow-get-courses';
+
 xhr.responseType = 'json';
+xhr.open('GET', requestUrl);
 
 xhr.addEventListener('load', () => {
-    if (xhr.status >= 400) {
-        console.error('Произошла ошибка')
-    }
     loader.classList.remove('loader_active');
-    let responseObj = xhr.response;
-    obj = responseObj.response.Valute;
-    let objArray = [];
-    for (let key in obj) {
-        let itemObj = {
-            charCode: obj[key]['CharCode'],
-            value: obj[key]['Value'],
-        }
-        objArray.push(itemObj);
-        items.innerHTML +=
-            `<div class="item">
-                <div class="item__code">
-                    ${obj[key]['CharCode']}
-                </div>
-                <div class="item__value">
-                    ${obj[key]['Value']}
-                </div>
-                <div class="item__currency">
-                    руб.
-                </div>
-            </div>`
+    let response = xhr.response.response.Valute;
+    localStorage.setItem('valutesInfo', JSON.stringify(response))
+    valutes.innerHTML = '';
+    for (let item in response) {
+        valutes.innerHTML += 
+        `<div class="item">
+            <div class="item__code">
+                ${response[item]['CharCode']}
+            </div>
+            <div class="item__value">
+                ${response[item]['Value']}
+            </div>
+            <div class="item__currency">
+                руб.
+            </div>
+        </div>`
     }
-    localStorage.setItem('items', JSON.stringify(objArray))
 })
 
-if (!obj) {
-    xhr.send()
+if (!valutesInfo) {
+    console.log('Запрос отправлен!')
+    xhr.send();
 } else {
     loader.classList.remove('loader_active');
-    for (let key in obj) {
-        items.innerHTML +=
-            `<div class="item">
-                <div class="item__code">
-                    ${obj[key]['charCode']}
-                </div>
-                <div class="item__value">
-                    ${obj[key]['value']}
-                </div>
-                <div class="item__currency">
-                    руб.
-                </div>
-            </div>`
+    for (let item in valutesInfo) {
+        valutes.innerHTML += 
+        `<div class="item">
+            <div class="item__code">
+                ${valutesInfo[item]['CharCode']}
+            </div>
+            <div class="item__value">
+                ${valutesInfo[item]['Value']}
+            </div>
+            <div class="item__currency">
+                руб.
+            </div>
+        </div>`
     }
+    console.log('Взяли из локального хранилища!')  
 }
 
 //чтобы хоть когда-то информация обновлялась - удаляем localStorage, если не перезагружать страницу хотя бы (допустим) 1 минуту
 window.setInterval(() => {
-    localStorage.clear();
+    localStorage.removeItem('valutesInfo');
     console.log('localStorage is cleared!')
 }, 60000)
-
-
