@@ -1,28 +1,30 @@
-const form = document.getElementById('form');
-const progressBar = document.getElementById('progress');
+const progress = document.getElementById('progress');
 const sendBtn = document.getElementById('send');
+const form = document.getElementById('form');
 
 let xhr = new XMLHttpRequest();
-let requestURL = 'https://students.netoservices.ru/nestjs-backend/upload';
+let requestUrl = 'https://students.netoservices.ru/nestjs-backend/upload';
 
-xhr.upload.onprogress = (event) => { 
-    progressBar.value = event.loaded / event.total;
+xhr.upload.onprogress = (event) => {
+    progress.value = event.loaded / event.total;
 }
 
-sendBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    let formData = new FormData(form);
-    console.log('Данные загружаются: ' + formData)
-    xhr.open('POST', requestURL);
-    xhr.send(formData);
+xhr.addEventListener('load', () => {
+    alert('Loading has completed');
+    progress.value = 0;
 })
 
-xhr.onloadend = function () {
-    if (xhr.status >= 200) {
-        alert("Данные успешно загружены");
-        progressBar.value = 0;
-    } else {
-        alert("Ошибка " + xhr.status);
-    }
-}
+sendRequest('POST', requestUrl);
 
+
+function sendRequest(method, url) {
+    if (method === 'POST') {
+        sendBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            let formData = new FormData(form);
+            xhr.open(method, url);
+            xhr.send(formData);
+        })
+    }
+    //если 'GET'-запрос, тогда что-то другое
+}
